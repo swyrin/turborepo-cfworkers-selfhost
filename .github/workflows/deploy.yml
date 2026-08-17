@@ -54,8 +54,3 @@ jobs:
         with:
           apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
-
-      - name: Build & Deploy to Cloudflare Workers
-        run: |
-          worker-build --release
-          wrangler deploy
