@@ -6,7 +6,7 @@ compatibility_date = "2026-07-22"
 command = "worker-build --release"
 
 [secrets]
-required = ["TURBO_CACHE_TOKEN"]
+required = ["TURBO_TOKEN"]
 
 [observability]
 enabled = true

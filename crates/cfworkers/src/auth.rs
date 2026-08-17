@@ -14,7 +14,7 @@ use worker::Env;
 
 use crate::error::internal;
 
-const TOKEN_SECRET: &str = "TURBO_CACHE_TOKEN";
+const TOKEN_SECRET: &str = "TURBO_TOKEN";
 
 pub(crate) async fn ensure_authorized(
     State(env): State<Env>,
