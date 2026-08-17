@@ -16,4 +16,3 @@ pub async fn main(
 ) -> worker::Result<axum::http::Response<Body>> {
     Ok(app::router(env).call(req).await?)
 }
-
