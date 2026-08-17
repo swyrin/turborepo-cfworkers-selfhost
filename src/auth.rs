@@ -31,4 +31,3 @@ pub(crate) async fn ensure_authorized(
         Err(StatusCode::UNAUTHORIZED)
     }
 }
-

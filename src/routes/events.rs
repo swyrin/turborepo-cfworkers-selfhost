@@ -15,25 +15,25 @@ struct CacheEventBatchLog<'event> {
     events: &'event [CacheEvent],
 }
 
-#[utoipa::path(
-    post,
-    path = "/v8/artifacts/events",
-    tag = "cache",
-    summary = "Accept cache usage events",
-    params(
-        ("teamId" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
-        ("slug" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
-    ),
-    request_body(content = Vec<CacheEvent>, content_type = "application/json", description = "Cache events recorded in Workers Analytics Engine"),
-    security(("bearerAuth" = [])),
-    responses(
-        (status = 200, description = "Events accepted"),
-        (status = 400, description = "Invalid event payload"),
-        (status = 401, description = "Missing or invalid Bearer token"),
-        (status = 413, description = "More than 250 events supplied"),
-        (status = 500, description = "Analytics Engine or Worker configuration error"),
-    )
-)]
+// #[utoipa::path(
+//     post,
+//     path = "/v8/artifacts/events",
+//     tag = "cache",
+//     summary = "Accept cache usage events",
+//     params(
+//         ("teamId" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
+//         ("slug" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
+//     ),
+//     request_body(content = Vec<CacheEvent>, content_type = "application/json", description = "Cache events recorded in Workers Analytics Engine"),
+//     security(("bearerAuth" = [])),
+//     responses(
+//         (status = 200, description = "Events accepted"),
+//         (status = 400, description = "Invalid event payload"),
+//         (status = 401, description = "Missing or invalid Bearer token"),
+//         (status = 413, description = "More than 250 events supplied"),
+//         (status = 500, description = "Analytics Engine or Worker configuration error"),
+//     )
+// )]
 pub(crate) async fn record_events(
     State(env): State<Env>,
     Json(events): Json<Vec<CacheEvent>>,
@@ -67,4 +67,3 @@ pub(crate) async fn record_events(
 
     Ok(StatusCode::OK)
 }
-

@@ -16,7 +16,4 @@ serde_json = "1.0.151"
 serde-wasm-bindgen = "0.6.5"
 subtle = "2.6.1"
 tower-service = "0.3.3"
-utoipa = "5.5.0"
-utoipa-axum = "0.2.0"
-utoipa-scalar = { version = "0.3.0", features = ["axum"] }
 worker = { version = "0.8.5", features = ["axum", "http"] }

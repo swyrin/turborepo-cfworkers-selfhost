@@ -15,7 +15,7 @@ use worker::{
 
 use crate::{
     error::{HandlerResult, internal},
-    models::{ArtifactBody, ArtifactUploadResponse},
+    models::ArtifactUploadResponse,
 };
 
 const BUCKET_BINDING: &str = "TURBO_CACHE";
@@ -77,32 +77,6 @@ fn optional_header(headers: &HeaderMap, name: &'static str) -> Result<Option<Str
         .transpose()
 }
 
-#[utoipa::path(
-    get,
-    path = "/v8/artifacts/{hash}",
-    tag = "cache",
-    summary = "Download a cached artifact",
-    params(
-        ("hash" = String, Path, description = "Turborepo artifact hash", min_length = 1, max_length = 128, pattern = "^[A-Za-z0-9_-]+$"),
-        ("teamId" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
-        ("slug" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
-    ),
-    security(("bearerAuth" = [])),
-    responses(
-        (status = 200, description = "Cached artifact", body = ArtifactBody, content_type = "application/octet-stream",
-            headers(
-                ("x-artifact-duration" = u64, description = "Task execution duration in milliseconds"),
-                ("x-artifact-tag" = String, description = "Opaque artifact signature, when supplied during upload"),
-                ("x-artifact-sha" = String, description = "Source revision, when supplied during upload"),
-                ("x-artifact-dirty-hash" = String, description = "Dirty tree hash, when supplied during upload")
-            )
-        ),
-        (status = 400, description = "Invalid artifact hash"),
-        (status = 401, description = "Missing or invalid Bearer token"),
-        (status = 404, description = "Artifact is not cached"),
-        (status = 500, description = "R2 operation failed"),
-    )
-)]
 #[worker::send]
 pub(crate) async fn get_artifact(
     State(env): State<Env>,
@@ -129,34 +103,6 @@ pub(crate) async fn get_artifact(
     Ok(response.into())
 }
 
-#[utoipa::path(
-    head,
-    path = "/v8/artifacts/{hash}",
-    tag = "cache",
-    summary = "Check whether an artifact is cached",
-    params(
-        ("hash" = String, Path, description = "Turborepo artifact hash", min_length = 1, max_length = 128, pattern = "^[A-Za-z0-9_-]+$"),
-        ("teamId" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
-        ("slug" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
-    ),
-    security(("bearerAuth" = [])),
-    responses(
-        (status = 200, description = "Artifact exists",
-            headers(
-                ("Content-Length" = u64, description = "Artifact size in bytes"),
-                ("ETag" = String, description = "R2 entity tag"),
-                ("x-artifact-duration" = u64, description = "Task execution duration in milliseconds"),
-                ("x-artifact-tag" = String, description = "Opaque artifact signature, when supplied during upload"),
-                ("x-artifact-sha" = String, description = "Source revision, when supplied during upload"),
-                ("x-artifact-dirty-hash" = String, description = "Dirty tree hash, when supplied during upload")
-            )
-        ),
-        (status = 400, description = "Invalid artifact hash"),
-        (status = 401, description = "Missing or invalid Bearer token"),
-        (status = 404, description = "Artifact is not cached"),
-        (status = 500, description = "R2 operation failed"),
-    )
-)]
 #[worker::send]
 pub(crate) async fn head_artifact(
     State(env): State<Env>,
@@ -177,30 +123,6 @@ pub(crate) async fn head_artifact(
     Ok(response.into())
 }
 
-#[utoipa::path(
-    put,
-    path = "/v8/artifacts/{hash}",
-    tag = "cache",
-    summary = "Upload a cache artifact",
-    params(
-        ("hash" = String, Path, description = "Turborepo artifact hash", min_length = 1, max_length = 128, pattern = "^[A-Za-z0-9_-]+$"),
-        ("teamId" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
-        ("slug" = Option<String>, Query, description = "Accepted for compatibility; this Worker is single-tenant"),
-        ("x-artifact-duration" = Option<u64>, Header, description = "Task execution duration in milliseconds; defaults to zero"),
-        ("x-artifact-tag" = Option<String>, Header, description = "Opaque Turborepo artifact signature"),
-        ("x-artifact-sha" = Option<String>, Header, description = "Source revision associated with the artifact"),
-        ("x-artifact-dirty-hash" = Option<String>, Header, description = "Dirty tree hash associated with the artifact"),
-    ),
-    request_body(content = ArtifactBody, content_type = "application/octet-stream", description = "Opaque Turborepo artifact"),
-    security(("bearerAuth" = [])),
-    responses(
-        (status = 200, description = "Artifact stored", body = ArtifactUploadResponse),
-        (status = 400, description = "Invalid artifact hash, duration, or metadata header"),
-        (status = 401, description = "Missing or invalid Bearer token"),
-        (status = 411, description = "Content-Length is required"),
-        (status = 500, description = "R2 operation failed"),
-    )
-)]
 #[worker::send]
 pub(crate) async fn put_artifact(
     State(env): State<Env>,
@@ -264,4 +186,3 @@ mod tests {
         assert!(artifact_key(&"a".repeat(129)).is_err());
     }
 }
-

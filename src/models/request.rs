@@ -1,15 +1,9 @@
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
 
-#[derive(ToSchema)]
-#[schema(value_type = String, format = Binary)]
-#[expect(
-    dead_code,
-    reason = "used by utoipa."
-)]
+#[expect(dead_code, reason = "used by utoipa.")]
 pub(crate) struct ArtifactBody(Vec<u8>);
 
-#[derive(Clone, Copy, Deserialize, Serialize, ToSchema)]
+#[derive(Clone, Copy, Deserialize, Serialize)]
 #[serde(rename_all = "UPPERCASE")]
 pub(crate) enum CacheSource {
     Local,
@@ -25,7 +19,7 @@ impl CacheSource {
     }
 }
 
-#[derive(Clone, Copy, Deserialize, Serialize, ToSchema)]
+#[derive(Clone, Copy, Deserialize, Serialize)]
 #[serde(rename_all = "UPPERCASE")]
 pub(crate) enum CacheEventKind {
     Hit,
@@ -41,7 +35,7 @@ impl CacheEventKind {
     }
 }
 
-#[derive(Deserialize, Serialize, ToSchema)]
+#[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub(crate) struct CacheEvent {
     pub(crate) session_id: Option<String>,

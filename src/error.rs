@@ -8,4 +8,3 @@ pub(crate) fn internal(error: impl Display) -> StatusCode {
     worker::console_error!("{error}");
     StatusCode::INTERNAL_SERVER_ERROR
 }
-
