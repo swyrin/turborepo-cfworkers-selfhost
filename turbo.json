@@ -1,0 +1,40 @@
+{
+    "$schema": "https://turborepo.dev/schema.json",
+    "futureFlags": {
+        "experimentalCargoWorkspaces": true,
+        "experimentalTaskCommand": true
+    },
+    "tasks": {
+        "turborepo-cfworkers-selfhost#lint": {
+            "command": [
+                "cargo",
+                "clippy"
+            ]
+        },
+        "turborepo-cfworkers-selfhost#format": {
+            "command": [
+                "cargo",
+                "fmt",
+                "--check"
+            ]
+        },
+        "turborepo-cfworkers-selfhost#build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "command": [
+                "worker-build",
+                "--release"
+            ]
+        },
+        "turborepo-cfworkers-selfhost#deploy": {
+            "dependsOn": [
+                "build"
+            ],
+            "command": [
+                "wrangler",
+                "deploy"
+            ]
+        }
+    }
+}

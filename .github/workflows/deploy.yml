@@ -44,13 +44,12 @@ jobs:
           rustup target add wasm32-unknown-unknown
           cargo install worker-build --locked --version 0.8.5
 
-      - run: pnpm add turbo --global
+      - run: pnpm add turbo wrangler --global
 
-      - run: cargo clippy
+      - run: turbo run format
 
-      - run: cargo test
+      - run: turbo run lint
 
-      - uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+      - run: turbo run test
+
+      - run: turbo run deploy
