@@ -5,20 +5,20 @@
         "experimentalTaskCommand": true
     },
     "tasks": {
-        "turborepo-cfworkers-selfhost#lint": {
+        "cfworkers#lint": {
             "command": [
                 "cargo",
                 "clippy"
             ]
         },
-        "turborepo-cfworkers-selfhost#format": {
+        "cfworkers#format": {
             "command": [
                 "cargo",
                 "fmt",
                 "--check"
             ]
         },
-        "turborepo-cfworkers-selfhost#build": {
+        "cfworkers#build": {
             "dependsOn": [
                 "^build"
             ],
@@ -27,7 +27,7 @@
                 "--release"
             ]
         },
-        "turborepo-cfworkers-selfhost#deploy": {
+        "cfworkers#deploy": {
             "dependsOn": [
                 "build"
             ],

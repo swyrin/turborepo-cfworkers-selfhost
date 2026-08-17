@@ -127,6 +127,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801"
 
 [[package]]
+name = "cfworkers"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "axum-extra",
+ "futures-util",
+ "regex",
+ "serde",
+ "serde-wasm-bindgen",
+ "serde_json",
+ "subtle",
+ "tower-service",
+ "worker",
+]
+
+[[package]]
 name = "chrono"
 version = "0.4.45"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -813,22 +829,6 @@ name = "tower-service"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8df9b6e13f2d32c91b9bd719c00d1958837bc7dec474d94952798cc8e69eeec3"
-
-[[package]]
-name = "turborepo-cfworkers-selfhost"
-version = "0.1.0"
-dependencies = [
- "axum",
- "axum-extra",
- "futures-util",
- "regex",
- "serde",
- "serde-wasm-bindgen",
- "serde_json",
- "subtle",
- "tower-service",
- "worker",
-]
 
 [[package]]
 name = "typenum"

@@ -1,26 +1,6 @@
 [workspace]
-members = ["."]
+members = ["crates/cfworkers"]
 resolver = "3"
 
 [workspace.metadata]
-name = "turbo"
-
-[package]
 name = "turborepo-cfworkers-selfhost"
-version = "0.1.0"
-edition = "2024"
-
-[lib]
-crate-type = ["cdylib"]
-
-[dependencies]
-axum = { version = "0.8.4", default-features = false, features = ["json"] }
-axum-extra = { version = "0.12.6", default-features = false, features = ["typed-header"] }
-futures-util = { version = "0.3.31", default-features = false }
-regex = { version = "1.13.1", default-features = false, features = ["std"] }
-serde = { version = "1.0.219", features = ["derive"] }
-serde_json = "1.0.151"
-serde-wasm-bindgen = "0.6.5"
-subtle = "2.6.1"
-tower-service = "0.3.3"
-worker = { version = "0.8.5", features = ["axum", "http"] }
