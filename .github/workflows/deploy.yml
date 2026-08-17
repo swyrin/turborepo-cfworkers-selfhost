@@ -32,6 +32,7 @@ jobs:
 
       - uses: pnpm/setup@v2
         with:
+          version: "11.22.0"
           runtime: node@24
           cache: true
 
