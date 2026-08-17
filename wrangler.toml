@@ -1,0 +1,30 @@
+name = "turbo"
+main = "build/index.js"
+compatibility_date = "2026-07-22"
+
+[build]
+command = "worker-build --release"
+
+[secrets]
+required = ["TURBO_CACHE_TOKEN"]
+
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+
+[observability.traces]
+enabled = true
+head_sampling_rate = 1
+
+[[r2_buckets]]
+binding = "TURBO_CACHE"
+bucket_name = "turborepo-cache"
+
+[[analytics_engine_datasets]]
+binding = "TURBO_CACHE_EVENTS"
+dataset = "turborepo_cache_events"
+
