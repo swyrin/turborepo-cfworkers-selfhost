@@ -4,6 +4,9 @@
         "experimentalCargoWorkspaces": true,
         "experimentalTaskCommand": true
     },
+    "globalPassThroughEnv": [
+        "CLOUDFLARE_*"
+    ],
     "tasks": {
         "cfworkers#lint": {
             "command": [
